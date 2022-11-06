@@ -8,8 +8,8 @@ Drum kits Classificaion
 
 # Purpose
 
-Unlike other instruments, Drum is the instrument that brings together multiple percussive instrumets, such as Kick, Snare, Hi-Hat, etc..  
-Which means Learning how to classify drum kits using ML will improve your understanding of sound and ML. Of course it's more interesting than classifying MNIST dataset!
+Unlike other instruments, the Drum is the instrument that brings together multiple percussive instruments, such as Kick, Snare, Hi-Hat, etc...  
+This means Learning how to classify drum kits using ML will improve your understanding of sound and ML. Of course, it's more interesting than classifying MNIST dataset!
 
 
 In this Project, I'm gonna classify seven drum kits in four major ways.
@@ -34,7 +34,7 @@ You can also download some samples for free from [FreeWaveSamples][fws_link] or 
 [fws_link]: https://freewavesamples.com "Free Wave Sampels"
 [reddit_link]: https://www.reddit.com/r/Drumkits/ "r/Drumkits"
 
-the Drum kits are divided into seven major claaes, and collected 100 samples for each of the seven classes.
+the Drum kits are divided into seven major classes, and collected 100 samples for each of the seven classes.
 
 * Kick
 * Snare
@@ -49,10 +49,10 @@ the Drum kits are divided into seven major claaes, and collected 100 samples for
 
 # Audio Augmentation
 
-I didn't try the Audio Augmentation because I didn't know how to augment audio data at that time, but for those of you interested in related research, I leave this:
+I didn't try Audio Augmentation because I didn't know how to augment audio data at that time, but for those of you interested in related research, I leave this:
 
-There are may ways to transform audio data.
-EQ bands, Compressor, Reverb, Limiter, Pitch Shift(not recommended for this proj), Adding Noise, Freq. Masking(alos not recommended for this proj), etc..
+There are many ways to transform audio data.
+EQ bands, Compressor, Reverb, Limiter, Pitch Shift(not recommended for this proj), Adding Noise, Freq. Masking(also not recommended for this proj), etc...
 
 It would be best done by hand, but we don't have much time, so I recommend installing two [Python][pedal_lnk] [Libraries][adm_lnk].
 
@@ -89,11 +89,11 @@ Finally, the ratio of training data to evaluation data is divided into 8:2.
 
 [nn_wiki]: https://en.wikipedia.org/wiki/Neural_network "Neural network wikipedia"
 
-It uses the simples model of the four methods.
+The simplest model of the four methods.
 
-Even creating a smiple model with one relu layer, you can get a not bad result.
+Even creating a simple model with one relu layer, you can get a not bad result.
 
-In order to find optimized performance while increasing the complexity of the model, the generating model method is overriden.
+To find optimized performance while increasing the complexity of the model, the generating model method is overridden.
 Wrapping the method with `keras.wrappers.scikit_learn.KerasRegressor`, you can find the best parameters through the RandomSearchCV from scikit-learn.
 
 
@@ -103,15 +103,15 @@ Wrapping the method with `keras.wrappers.scikit_learn.KerasRegressor`, you can f
 
 ## Mel-Spectrogram
 
-### STFT(SHort Time Fouriter Transformer)  
-STFT is a method to analyze the sound whose frequency characteristics vary with time. It is divided into time series constant time interval and the spectrum is obtained for each interval.
+### STFT(Short Time Fourier Transformer)  
+STFT is a method to analyze sound whose frequency characteristics vary with time. It is divided into time series constant time intervals and the spectrum is obtained for each interval.
 
 ### Mel-Spectrogram
- Spectrum that changed the unit of frequency to mel unit according to mel-scale
+ A Spectrum that changed the unit of frequency to mel unit according to mel-scale
 
 
 ## Convolutional Neural Networ
-It is the one of the deep learning structures created by mimicking the human optic nerve.  
+It is one of the deep learning structures created by mimicking the human optic nerve.  
 It maintains the spatial information of the image using the convolution operation and dramatically reduces the computational complexity compared to the general neural network, and performs well in image classification.
 
 ### More Detail about [CNN][conv_lnk]  /  [Mel-Spectrogram][mel_lnk]
@@ -123,7 +123,7 @@ It maintains the spatial information of the image using the convolution operatio
 </br>
 
 The Mel-Spectrogram array is extracted using `librosa` library.
-On this project, the y-axis(frequency) is divided into 128 equal parts and the x-axis(time) is fixed to 20.
+In this project, the y-axis(frequency) is divided into 128 equal parts and the x-axis(time) is fixed at 20.
 
 A simple model consisting of three layers of convolution and max pooling.
 It is a simple model, but overall it showed the best performance.
@@ -138,7 +138,7 @@ There is also a way to create a 3-channel image file using the `matplotlib.pyplo
 
 On `extract.ipynb`, Five features of each data were extracted by unit time through the Python `librosa` library.
 
-The extracted features ar as follow:
+The extracted features are as follow:
 * Duration
     * the length of the data after trimming
 
@@ -146,7 +146,7 @@ The extracted features ar as follow:
     * the difference between the upper and lower frequencies
 
 * Spectral Rolloff
-    * It can be defined as the action of a specific type of filter which is designed to roll off the frequencies outside to a specific range.  
+    * It can be defined as the action of a specific type of filter which is designed to roll off the frequencies outside a specific range.  
     the default value of roll_percent is 0.85, but 0.8 is used in this project
 
 * Spectral Flatness
@@ -165,25 +165,25 @@ The extracted features ar as follow:
 [sp_lnk]: https://analyticsindiamag.com/a-tutorial-on-spectral-feature-extraction-for-audio-analytics/ "Others"
 
 
-A total of 57 feature values (14 values per one feature, and duration) are extracted. 
+A total of 57 feature values (14 values per feature, and duration) are extracted. 
 
 A total of 11 models provided by `scikit-learn` such as decision tree, random forest, SVC, etc. were trained and evaluated.
 
 Overall, it showed an accuracy of more than 70%.
-In addition, Visualizing one of the decision trees in random forest, it can be seen that Spectrall rolloff values are most frequently used for decision making.
+In addition, by visualizing one of the decision trees in the random forest, it can be seen that Spectrall rolloff values are most frequently used for decision-making.
 
 </br></br>
 
 # 4. Bi-directional LTSM using waveform
 
 Sound is a vibration of air, which means that it can be said to be a time series data.
-Thus, RNN model can be used for classifing.
+Thus, the RNN model can be used for classifying.
 
 Recurrent Neural Network is a class of neural networks that allow previous outputs to be used as inputs while having hidden states.
 
 However, there is a disadvantage that the information of the front RNN layer is not well learned because only the output hidden state of the RNN layer for the last time step is transmitted to the next layer.
 
-In order to improve the limitations of the existing model, a bi-directional RNN model is proposed to combine the previous part of the sequence with the subsequent part.
+To improve the limitations of the existing model, a bi-directional RNN model is proposed to combine the previous part of the sequence with the subsequent part.
 
 ### More detail about [RNN][rnn_lnk] / [Bi-Directional RNN][ls_lnk]
 
@@ -194,7 +194,7 @@ In order to improve the limitations of the existing model, a bi-directional RNN 
 </br>
 
 The performance of the classification model is not good because the length of the waveform itself is so long.
-Simply replacing the mel-spectrogram with the input instead of the waveform will provide a significant performance improvement.
+Simply replacing the Mel-spectrogram with the input instead of the waveform will provide a significant performance improvement.
 Due to data loss, it is not applied in this project.
 
 
